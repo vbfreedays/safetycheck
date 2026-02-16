@@ -163,8 +163,8 @@
         formatThaiDate(dateValue);
 
       showLoading();
-
-      fetch(API_URL + "?date=" + dateValue)
+      
+      fetch(API_URL + "&date=" + dateValue)
         .then(res => res.json())
         .then(renderData)
         .catch(err => {
