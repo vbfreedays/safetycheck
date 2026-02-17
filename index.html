@@ -21,17 +21,25 @@
       color: #e5e7eb;
     }
 
-    /* ================= HEADER ================= */
     .header {
       position: sticky;
       top: 0;
       z-index: 1000;
+
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 20px;
-      background: rgba(55, 54, 53, 0.97);
+      padding: 7px 24px;
+      background: linear-gradient(135deg,
+          rgba(60, 58, 57, 0.75),
+          rgba(45, 44, 43, 0.75));
+
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.45),
+        0 1px 0 rgba(255, 255, 255, 0.05) inset;
     }
 
     .title-row {
@@ -181,6 +189,10 @@
 
     /* ================= RESPONSIVE ================= */
     @media (max-width:1024px) {
+      .header {
+        padding: 7px 24px;
+      }
+
       .images {
         grid-template-columns: repeat(3, 1fr);
       }
@@ -248,11 +260,10 @@
       const title = document.getElementById("mainTitle");
       const dateText = document.getElementById("dateText");
 
-      if(window.innerWidth <= 768){
-        title.innerText = "การตรวจสอบอุปกรณ์";
+      title.innerText = "ผลการตรวจอุปกรณ์ความปลอดภัย";
+      if(window.innerWidth <= 1024){
         dateText.innerText = "";
       }else{
-        title.innerText = "ผลการตรวจสอบอุปกรณ์ความปลอดภัย";
         dateText.innerText = formatThaiDate(dateStr);
       }
     }
@@ -269,6 +280,8 @@
         </div>
       `;
     }
+
+
 
     /* ================= DATA ================= */
     const API_URL = "https://script.google.com/macros/s/AKfycbwwlutlqp5bDAxnWttuH0nrN3L2PtSt3G7Ga-XoNQ8zUVLoHmYjtrkPKt5snKhleaVH0Q/exec";
@@ -295,6 +308,8 @@
             `<div class="empty">โหลดข้อมูลไม่สำเร็จ</div>`;
         });
     }
+
+
 
     function renderData(data){
       const container = document.getElementById('content');
