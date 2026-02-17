@@ -8,7 +8,9 @@
   <title>ตรวจสอบอุปกรณ์</title>
 
   <style>
-    html { font-size: 18px; }
+    html {
+      font-size: 18px;
+    }
 
     body {
       margin: 0;
@@ -60,7 +62,7 @@
       filter: invert(1) brightness(1.5);
       opacity: 1;
     }
-    
+
     .group {
       padding: 25px;
       padding-bottom: 10;
@@ -91,24 +93,28 @@
       cursor: pointer;
     }
 
-    .images img:hover { transform: scale(1.03); }
+    .images img:hover {
+      transform: scale(1.03);
+    }
 
     @media (max-width: 1024px) {
-      .images { grid-template-columns: repeat(3, 1fr); }
+      .images {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
-    
+
     .loading-wrapper {
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 100px 0;
     }
-    
+
     .dots {
       display: flex;
       gap: 10px;
     }
-    
+
     .dots span {
       width: 20px;
       height: 20px;
@@ -116,20 +122,21 @@
       border-radius: 50%;
       animation: bounce 0.6s infinite alternate;
     }
-    
+
     .dots span:nth-child(2) {
       animation-delay: 0.2s;
     }
-    
+
     .dots span:nth-child(3) {
       animation-delay: 0.4s;
     }
-    
+
     @keyframes bounce {
       from {
         transform: translateY(0);
         opacity: 0.4;
       }
+
       to {
         transform: translateY(-10px);
         opacity: 1;
@@ -141,6 +148,45 @@
       text-align: center;
       font-size: 1rem;
       opacity: 0.8;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease;
+      z-index: 2000;
+      cursor: pointer;
+    }
+
+    .modal.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+      animation: zoomIn 0.2s ease;
+    }
+
+    @keyframes zoomIn {
+      from {
+        transform: scale(0.95);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
   </style>
 </head>
@@ -158,6 +204,10 @@
   </div>
 
   <div id="content"></div>
+
+  <div id="imageModal" class="modal">
+    <img id="modalImg">
+  </div>
 
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbwwlutlqp5bDAxnWttuH0nrN3L2PtSt3G7Ga-XoNQ8zUVLoHmYjtrkPKt5snKhleaVH0Q/exec";
@@ -236,8 +286,10 @@
           const img = document.createElement('img');
           img.src = url;
           img.loading = 'lazy';
+          img.addEventListener('click', () => openModal(url));
           imagesDiv.appendChild(img);
         });
+
 
         group.appendChild(title);
         group.appendChild(imagesDiv);
@@ -258,8 +310,23 @@
 
       loadData();
     });
-
+    
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImg');
+    
+    function openModal(src) {
+      modalImg.src = src;
+      modal.classList.add('show');
+    }
+    
+    function closeModal() {
+      modal.classList.remove('show');
+    }
+    
+    modal.addEventListener('click', closeModal);
+  
   </script>
 
 </body>
+
 </html>
